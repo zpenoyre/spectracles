@@ -63,7 +63,7 @@ def getInfo(ra=-1,dec=-1,name=-1):
     starDict['StellarTypeSource']=getRef(star['SP_BIBCODE'])
     starDict['RA']=ra
     starDict['DEC']=dec
-    starDict['CoordRef']=getRef(star['COO_BIBCODE'])
+    starDict['CoordSource']=getRef(star['COO_BIBCODE'])
     starDict['Distance']=1000/star['PLX_VALUE'] #1000 as Simbad gives value in mas
     starDict['DistanceSource']=getRef(star['PLX_BIBCODE'])
     
@@ -72,15 +72,15 @@ def getInfo(ra=-1,dec=-1,name=-1):
     if Teff<=0:
         TeffSource=""
     starDict['Teff']=Teff
-    starDict['TeffSoruce']=TeffSource
+    starDict['TeffSource']=TeffSource
     if rad<=0:
         radSource=""
     starDict['Radius']=rad
-    starDict['RadiusSoruce']=radSource
+    starDict['RadiusSource']=radSource
     if lum<=0:
         lumSource=""
     starDict['Luminosity']=lum
-    starDict['LuminositySoruce']=lumSource
+    starDict['LuminositySource']=lumSource
     
     return starDict
 
@@ -111,7 +111,6 @@ def getRef(ref): #finds the reference (in the form "Herczeg+ 2014") for a given 
     description=catalogs[list(catalogs.items())[0][0]].description
     reference=description[description.rfind('(')+1:description.rfind(')')]
     return reference.replace(",","") #removes any commas
-    
     
 def getVizierSpectra(ra,dec,windowSize=2):
     #star=astroquery.simbad.Simbad.query_object(mainName)
@@ -235,14 +234,15 @@ def queryIrsa(ra,dec,windowSize=2): #at the moment only queries the Herchel poin
             es.append(error*c*1e-17/wl**2)
     return np.array(ls),np.array(fs),np.array(es)
 
-def getIrsaSpectra(tmName):
-    mainName,tmName,ra,dec,spType,objectType=getInfo(name='2MASS '+tmName)
-    irsaLs,irsaFs,irsaEs=queryIrsa(ra,dec)
-    if irsaLs[irsaLs<2e-4].size>0:
-        addToSpectra(tmName,irsaLs[irsaLs<2e-4],irsaFs[irsaLs<2e-4],irsaEs[irsaLs<2e-4],2017,'Marton+ 2017','Herschel')
-    if irsaLs[irsaLs>2e-4].size>0:
-        addToSpectra(tmName,irsaLs[irsaLs>2e-4],irsaFs[irsaLs>2e-4],irsaEs[irsaLs>2e-4],2017,'Schulz+ 2017','Herschel')
-        
+#def getIrsaSpectra(tmName):
+#    mainName,tmName,ra,dec,spType,objectType=getInfo(name='2MASS '+tmName)
+#    irsaLs,irsaFs,irsaEs=queryIrsa(ra,dec)
+#    if irsaLs[irsaLs<2e-4].size>0:
+#        addToSpectra(tmName,irsaLs[irsaLs<2e-4],irsaFs[irsaLs<2e-4],irsaEs[irsaLs<2e-4],2017,'Marton+ 2017','Herschel')
+#    if irsaLs[irsaLs>2e-4].size>0:
+#        addToSpectra(tmName,irsaLs[irsaLs>2e-4],irsaFs[irsaLs>2e-4],irsaEs[irsaLs>2e-4],2017,'Schulz+ 2017','Herschel')
+
+# Finds and returns all spectral data readable online (from Vizier & IRAS) for a given object, can also save it to file        
 def getSpectra(name=-1,ra=-1,dec=-1,saveDir=-1,windowSize=2,overwrite=0):
     starDict=getInfo(name=name,ra=ra,dec=dec)
     ra=starDict['RA']
@@ -299,6 +299,7 @@ def getSpectra(name=-1,ra=-1,dec=-1,saveDir=-1,windowSize=2,overwrite=0):
         astropy.io.ascii.write(table,output=fName, format='ecsv')
     return table
     
+# Retrieves a spectra from file
 def getSpectraFromFile(twoMassID,saveDir):
     if saveDir[-1]!='/':
         saveDir=saveDir+'/'
@@ -315,3 +316,62 @@ def getSpectraFromFile(twoMassID,saveDir):
         print('No file found at: ')
         print(fName)
         return -1
+        
+# Adds new data points to an existing spectra, tries not to duplicate anything
+def addToSpectra(twoMassID,saveDir,ls,fs,es,source,telescope,overwrite=-1):
+    table=getSpectraFromFile(twoMassID,saveDir)
+    if (source in np.unique(table['source'])) & (overwrite!=1):
+        print('Already data in table from this source (',source,')')
+        print("We assume you don't want to duplicate data points so just returning the table saved to file")
+        print('If you really do want to do this you can run the function with overwrite=1')
+        return table
+    for i in range(ls.size):
+        table.add_row([ls[i],fs[i],es[i],source,telescope])
+    if overwrite!=-1: # expect to save to file (unless the user REALLY doesn't want to)
+        if saveDir[-1]!='/':
+            saveDir=saveDir+'/'
+        fName=saveDir+twoMassID+'.ecsv'
+        astropy.io.ascii.write(table,output=fName, format='ecsv')
+    return table
+    
+def addToMetadata(twoMassID,saveDir,property,value,source,overwrite=0):
+    table=getSpectraFromFile(twoMassID,saveDir)
+    #print(property not in table.meta.keys())
+    if (property not in table.meta.keys()) | ('ource' in property):
+        print('No property called ',property,' in table')
+        print('Valid properties stored in metadata are:')
+        for key in table.meta.keys():
+            #print(key)
+            #print('ource' not in key)
+            if 'ource' not in key:
+                print(key)
+    if type(source)!='string':
+        if len(source)<5:
+            print('Must give a source of the form "Herczeg+ 2014", specifically must end with 4 digit year')
+    year=int(source[-4:])
+    oldSource=table.meta[property+'Source']#
+    if oldSource='':
+        oldYear=1632
+    else:
+        oldYear=oldSource[-4:]
+    if (year<oldYear) & (overwrite!=1):
+        if overwrite==0:
+            print('Trying to add data from an older source')
+            print('Existing value of ',table.meta[property],' comes from ',table.meta[property+'Source'])
+            print('(Note - if exisiting data is from Gaia and not astrometric you may want to replace it, they are fitted to very few data points)')
+            print('You can forcefully write to file by setting overwrite=1')
+            print('For now returning original table')
+            print('You can suppress this warning by setting overwrite=-1')
+        return table
+    table.meta[property]=value
+    table.meta[property+'Source']=source
+    
+    if saveDir[-1]!='/':
+        saveDir=saveDir+'/'
+    fName=saveDir+twoMassID+'.ecsv'
+    astropy.io.ascii.write(table,output=fName, format='ecsv') 
+    
+    return table
+    
+    
+    
