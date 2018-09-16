@@ -67,20 +67,24 @@ def getInfo(ra=-1,dec=-1,name=-1):
     starDict['Distance']=1000/star['PLX_VALUE'] #1000 as Simbad gives value in mas
     starDict['DistanceSource']=getRef(star['PLX_BIBCODE'])
     
-    Teff,rad,lum=gaiaData(ra,dec)
-    TeffSource,radSource,lumSource="Gaia Collaboration 2018","Gaia Collaboration 2018","Gaia Collaboration 2018"
-    if Teff<=0:
-        TeffSource=""
+    Teff,rad,lum,Ag=gaiaData(ra,dec)
+    gaiaSource="Gaia Collaboration 2018"
     starDict['Teff']=Teff
-    starDict['TeffSource']=TeffSource
-    if rad<=0:
-        radSource=""
+    starDict['TeffSource']=gaiaSource
+    if Teff<=0:
+        starDict['TeffSource']=""
     starDict['Radius']=rad
-    starDict['RadiusSource']=radSource
-    if lum<=0:
-        lumSource=""
+    starDict['RadiusSource']=gaiaSource
+    if rad<=0:
+        starDict['RadiusSource']=""
     starDict['Luminosity']=lum
-    starDict['LuminositySource']=lumSource
+    starDict['LuminositySource']=gaiaSource
+    if lum<=0:
+        starDict['LuminositySource']=""
+    starDict['Ag']=Ag
+    starDict['AgSource']=gaiaSource
+    if Ag<=0:
+        starDict['AgSource']=""
     
     return starDict
 
@@ -99,7 +103,10 @@ def gaiaData(ra,dec):
     lum=data['lum_val'][0]
     if np.ma.is_masked(lum):
         lum=-1
-    return Teff,rad,lum
+    Ag=data['a_g_val'][0]
+    if np.ma.is_masked(Ag):
+        Ag=-1
+    return Teff,rad,lum,Ag
 
 def getCoords(name):
     simbad=astroquery.simbad.Simbad()
@@ -145,10 +152,10 @@ def getVizierSpectra(ra,dec,windowSize=2):
         if len(catalogs)==0:
             continue #for some reason can't find table of data...
         description=catalogs[tableName].description
-        reference=description[description.rfind('(')+1:description.rfind(')')]
+        reference=description[description.rfind('(')+1:description.rfind(')')].replace(',','')
         #print('ref: ',reference)
         #sources[i]='"'+reference.replace(',','')+'"'
-        sources[i]=reference.replace(',','')
+        sources[i]=reference
         
         # Manually maps each data point to the telescope it comes from (probably should tabulate this elsewhere and work from that...)
         if ('Herschel' in source[i]) | (reference == 'Marsh+ 2016'):
@@ -200,11 +207,12 @@ def getVizierSpectra(ra,dec,windowSize=2):
         elif (reference == 'Belloche+ 2011'):
             telescopes[i]='APEX'
         else:
+            print(reference)
             telescopes[i]='Unspecified'
             if source[i][0]!=':':
                 print('___did you know about the ',source[i],' telescope?')
                 
-        if sources[i]=='Meng+ 2017': #points from this paper seem completely wrong (https://ui.adsabs.harvard.edu/#abs/2017ApJ...836...34M/abstract)
+        if sources[i]=='Meng+ 2017': #points from this paper seem completely wrong? (https://ui.adsabs.harvard.edu/#abs/2017ApJ...836...34M/abstract)
             telescopes[i]='Unspecified'
         #telescopes[i]='"'+telescopes[i]+'"'
     return lambdas,fluxs,sigmas,sources,telescopes
@@ -280,11 +288,13 @@ def getSpectra(name=-1,ra=-1,dec=-1,saveDir=-1,windowSize=2,overwrite=0):
         else:
             source='Marton+ 2017'
         table.add_row([iLs[i],iFs[i],iEs[i],source,telescope])
+    table.sort('lambda')
+    if saveDir!=-1:
+        starDict=addPropertyToFile(starDict)
     
     for key in starDict.keys():
         table.meta[key]=str(starDict[key])
-    table.meta['FileCreated']=str(datetime.datetime.today()).split()[0]
-    comments=['All units are SI, I leave it to the user to convert/add astropy units',
+    comments=['All units for flux+wavelength are SI, I leave it to the user to convert/add astropy units',
     'Meta data about the star is stored under indivdual fields',
     'e.g. if data stored in variable called "dataTable" the R.A. of the star can be found via "dataTable.meta["RA"]".',
     'Everything intended to be read into astropy tables - either directly or via the getSpectraFromFile() function.',
@@ -293,11 +303,23 @@ def getSpectra(name=-1,ra=-1,dec=-1,saveDir=-1,windowSize=2,overwrite=0):
     table.meta['comments']=comments
     
     if saveDir!=-1:
+        table.meta['FileCreated']=str(datetime.datetime.today()).split()[0]
         if saveDir[-1]!='/':
             saveDir=saveDir+'/'
         fName=saveDir+starDict['2MASSID']+'.ecsv'
-        astropy.io.ascii.write(table,output=fName, format='ecsv')
+        astropy.io.ascii.write(table,output=fName, format='ecsv',overwrite=True)
     return table
+    
+# There are some supplementary properties we'd like to keep track of but must add by hand (e.g. Mdot)
+# This function just helps reserve a space for them in the data file
+def addPropertyToFile(starDict):
+    properties=['Av','Age','Mass','Mdot','DiskMass','DiskRadius','BinaryFlag'] #would love to add more binary details but not immediately obvious how to
+    starDict['Region']='' # May want to add this by hand (though obviously not very well defined)
+    starDict['RegionSource']='' # Can be used to keep track of which works have led you to a particular star
+    for field in properties:
+        starDict[field]=-1
+        starDict[field+'Source']=''
+    return starDict
     
 # Retrieves a spectra from file
 def getSpectraFromFile(twoMassID,saveDir):
@@ -311,22 +333,31 @@ def getSpectraFromFile(twoMassID,saveDir):
         table.meta['Teff']=float(table.meta['Teff'])
         table.meta['Radius']=float(table.meta['Radius'])
         table.meta['Luminosity']=float(table.meta['Luminosity'])
+        table.meta['Ag']=float(table.meta['Ag']) # note - if value is known we recommend you use Av over Ag, but Ag comes from Gaia so is readily available for many stars
+        table.meta['Av']=float(table.meta['Av'])
+        table.meta['Age']=float(table.meta['Age'])
+        table.meta['Mass']=float(table.meta['Mass'])
+        table.meta['Mdot']=float(table.meta['Mdot'])
+        table.meta['DiskMass']=float(table.meta['DiskMass'])
+        table.meta['DiskRadius']=float(table.meta['DiskRadius'])
+        table.meta['BinaryFlag']=int(table.meta['BinaryFlag'])
         return table
     else:
-        print('No file found at: ')
+        print('\n No file found at: ')
         print(fName)
         return -1
         
 # Adds new data points to an existing spectra, tries not to duplicate anything
-def addToSpectra(twoMassID,saveDir,ls,fs,es,source,telescope,overwrite=-1):
+def addToSpectra(twoMassID,saveDir,ls,fs,es,source,telescope,overwrite=0):
     table=getSpectraFromFile(twoMassID,saveDir)
     if (source in np.unique(table['source'])) & (overwrite!=1):
-        print('Already data in table from this source (',source,')')
+        print('\n Already data in table from this source (',source,')')
         print("We assume you don't want to duplicate data points so just returning the table saved to file")
         print('If you really do want to do this you can run the function with overwrite=1')
         return table
     for i in range(ls.size):
         table.add_row([ls[i],fs[i],es[i],source,telescope])
+    table.sort('lambda')
     if overwrite!=-1: # expect to save to file (unless the user REALLY doesn't want to)
         if saveDir[-1]!='/':
             saveDir=saveDir+'/'
@@ -334,11 +365,27 @@ def addToSpectra(twoMassID,saveDir,ls,fs,es,source,telescope,overwrite=-1):
         astropy.io.ascii.write(table,output=fName, format='ecsv')
     return table
     
-def addToMetadata(twoMassID,saveDir,property,value,source,overwrite=0):
+def addToMetadata(twoMassID,saveDir,field,value,source,overwrite=0):
+    if type(field)==list: # If given a list of properties
+        nProperty=len(field)
+        nValue=len(value)
+        nSource=1
+        if type(source)==list:
+            nSource=len(source)
+        if nProperty!=nValue:
+            print('\n If supplying a list of properties then must give a matching length list of values')
+        if (nSource!=1) & (nSource!=nProperty):
+            print('\n Must either supply a single source or one for each property')
+        for i in range(len(field)):
+            if nSource!=1:
+                thisSource=source[i]
+            else:
+                thisSource=source
+            table=addToMetadata(twoMassID,saveDir,field[i],value[i],thisSource,overwrite=overwrite)
+        return table
     table=getSpectraFromFile(twoMassID,saveDir)
-    #print(property not in table.meta.keys())
-    if (property not in table.meta.keys()) | ('ource' in property):
-        print('No property called ',property,' in table')
+    if (field not in table.meta.keys()) | ('ource' in field):
+        print('\n No property called ',field,' in table')
         print('Valid properties stored in metadata are:')
         for key in table.meta.keys():
             #print(key)
@@ -347,24 +394,24 @@ def addToMetadata(twoMassID,saveDir,property,value,source,overwrite=0):
                 print(key)
     if type(source)!='string':
         if len(source)<5:
-            print('Must give a source of the form "Herczeg+ 2014", specifically must end with 4 digit year')
+            print('\n Must give a source of the form "Herczeg+ 2014", specifically must end with 4 digit year')
     year=int(source[-4:])
-    oldSource=table.meta[property+'Source']#
-    if oldSource='':
+    oldSource=table.meta[field+'Source']
+    if oldSource=='':
         oldYear=1632
     else:
-        oldYear=oldSource[-4:]
+        oldYear=int(oldSource[-4:])
     if (year<oldYear) & (overwrite!=1):
         if overwrite==0:
-            print('Trying to add data from an older source')
-            print('Existing value of ',table.meta[property],' comes from ',table.meta[property+'Source'])
+            print('\n Trying to add data about property: '+field+' from an older source')
+            print('Existing value of ',table.meta[field],' comes from ',table.meta[field+'Source'])
             print('(Note - if exisiting data is from Gaia and not astrometric you may want to replace it, they are fitted to very few data points)')
             print('You can forcefully write to file by setting overwrite=1')
             print('For now returning original table')
             print('You can suppress this warning by setting overwrite=-1')
         return table
-    table.meta[property]=value
-    table.meta[property+'Source']=source
+    table.meta[field]=value
+    table.meta[field+'Source']=source
     
     if saveDir[-1]!='/':
         saveDir=saveDir+'/'
@@ -373,5 +420,21 @@ def addToMetadata(twoMassID,saveDir,property,value,source,overwrite=0):
     
     return table
     
+# Very similar to above, except now we may want multiple sources for one star (specifying that all these papers touch on this star)
+def addRegionToMetadata(twoMassID,saveDir,region,source):
+    table=getSpectraFromFile(twoMassID,saveDir)
+    if table.meta['Region']=='': # no record of this stars region at the moment
+        table.meta['Region']=region
+        table.meta['RegionSource']=source
+    else:
+        if source in table.meta['RegionSource']:
+            print('\n Already recorded this source in addRegionToMetadata')
+        else:
+            table.meta['RegionSource']=table.meta['RegionSource']+', '+source
+    if saveDir[-1]!='/':
+        saveDir=saveDir+'/'
+    fName=saveDir+twoMassID+'.ecsv'
+    astropy.io.ascii.write(table,output=fName, format='ecsv') 
+    return table
     
     
