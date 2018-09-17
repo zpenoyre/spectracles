@@ -21,7 +21,8 @@ c=3e8
 
 def getInfo(ra=-1,dec=-1,name=-1):
     simbad=astroquery.simbad.Simbad()
-    simbad.add_votable_fields('sptype')
+    simbad.add_votable_fields('sp')
+    simbad.add_votable_fields('sp_bibcode')
     simbad.add_votable_fields('ids')
     simbad.add_votable_fields('otype')
     simbad.add_votable_fields('plx')
@@ -38,7 +39,8 @@ def getInfo(ra=-1,dec=-1,name=-1):
             whichEntry+=1
         star=star[whichEntry]
     else:
-        print('must enter name or coords (ra, dec) of star')
+        print('\n Must enter name or coords (ra, dec) of star')
+
     
     ra=star['RA']
     dec=star['DEC']
@@ -51,21 +53,26 @@ def getInfo(ra=-1,dec=-1,name=-1):
     else:
         tmName = startName[:endPoint]
     if (tmName[0]!='J') & (name!=-1): #if this named star doesn't have a 2mass name, looks for the nearest one that does
-        print('No 2MASS entry for star: ',mainName)
+        print('\n No 2MASS entry for star: ',mainName)
         print('Looking for nearest object with a 2MASS name')
         return getInfo(ra=ra,dec=dec)
     
     starDict={}
+    
     starDict['SimbadName']=star['MAIN_ID'].decode('utf-8') #getting rid of small b...
     starDict['2MASSID']=tmName
     starDict['ObjectType']=star['OTYPE'].decode('utf-8')
     starDict['StellarType']=star['SP_TYPE'].decode('utf-8')
-    starDict['StellarTypeSource']=getRef(star['SP_BIBCODE'])
+    starDict['StellarTypeSource']=getRef(star['SP_BIBCODE'].decode('utf-8'))
     starDict['RA']=ra
     starDict['DEC']=dec
-    starDict['CoordSource']=getRef(star['COO_BIBCODE'])
-    starDict['Distance']=1000/star['PLX_VALUE'] #1000 as Simbad gives value in mas
-    starDict['DistanceSource']=getRef(star['PLX_BIBCODE'])
+    starDict['CoordSource']=getRef(star['COO_BIBCODE'].decode('utf-8'))
+    if np.ma.is_masked(star['PLX_VALUE']): # No parralax data for this star
+        starDict['Distance']=-1
+        starDict['DistanceSource']=''
+    else:
+        starDict['Distance']=1000/star['PLX_VALUE'] #1000 as Simbad gives value in mas
+        starDict['DistanceSource']=getRef(star['PLX_BIBCODE'].decode('utf-8'))
     
     Teff,rad,lum,Ag=gaiaData(ra,dec)
     gaiaSource="Gaia Collaboration 2018"
@@ -93,7 +100,7 @@ def gaiaData(ra,dec):
     width = u.Quantity(5, u.arcsecond)
     data=astroquery.gaia.Gaia.query_object(coordinate=coord, width=width, height=width)
     if len(data)==0:
-        return -1,-1,-1
+        return -1,-1,-1,-1
     Teff=data['teff_val'][0]
     if np.ma.is_masked(Teff):
         Teff=-1
@@ -115,6 +122,8 @@ def getCoords(name):
 
 def getRef(ref): #finds the reference (in the form "Herczeg+ 2014") for a given bibcode (in form "2014ApJ...786...97H" or "J/ApJ/786/97")
     catalogs=astroquery.vizier.Vizier.find_catalogs(ref)
+    if len(catalogs)==0: # Seems some stars have data in Simbad but not Vizier - should only appear in metadata
+        return ''
     description=catalogs[list(catalogs.items())[0][0]].description
     reference=description[description.rfind('(')+1:description.rfind(')')]
     return reference.replace(",","") #removes any commas
@@ -202,12 +211,11 @@ def getVizierSpectra(ra,dec,windowSize=2):
             telescopes[i]='MKO'
         elif 'MSX' in source[i]:
             telescopes[i]='MSX'
-        elif (reference == 'Dzib+ 2015'):
+        elif (reference == 'Dzib+ 2013') | (reference == 'Dzib+ 2015'):
             telescopes[i]='VLA'
         elif (reference == 'Belloche+ 2011'):
             telescopes[i]='APEX'
         else:
-            print(reference)
             telescopes[i]='Unspecified'
             if source[i][0]!=':':
                 print('___did you know about the ',source[i],' telescope?')
@@ -262,7 +270,7 @@ def getSpectra(name=-1,ra=-1,dec=-1,saveDir=-1,windowSize=2,overwrite=0):
         fName=saveDir+starDict['2MASSID']+'.ecsv'
         if Path(fName).is_file():
             if overwrite==0:
-                print('Data file for this star already exists')
+                print('\n Data file for this star already exists')
                 print('You can find it at:')
                 print(fName)
                 print('Remember, all stars must have a 2MASS ID to be read, otherwise will default to nearest star in 2MASS catalog')
@@ -319,6 +327,7 @@ def addPropertyToFile(starDict):
     for field in properties:
         starDict[field]=-1
         starDict[field+'Source']=''
+    starDict['ExtraField']='' #adding a spare field for whatever data a user might want to put in
     return starDict
     
 # Retrieves a spectra from file
@@ -388,8 +397,6 @@ def addToMetadata(twoMassID,saveDir,field,value,source,overwrite=0):
         print('\n No property called ',field,' in table')
         print('Valid properties stored in metadata are:')
         for key in table.meta.keys():
-            #print(key)
-            #print('ource' not in key)
             if 'ource' not in key:
                 print(key)
     if type(source)!='string':
@@ -437,4 +444,15 @@ def addRegionToMetadata(twoMassID,saveDir,region,source):
     astropy.io.ascii.write(table,output=fName, format='ecsv') 
     return table
     
+# Have an extra field! Write whatever you want! Go crazy!
+# Note - I've sometimes used this to record the parameters of fitting models
+# You can put lists or dictionaries in here, as long as you decide how to convert them to strings and back
+def rewriteExtraField(twoMassID,saveDir,entry):
+    table=getSpectraFromFile(twoMassID,saveDir)
+    table.meta['ExtraField']
+    if saveDir[-1]!='/':
+        saveDir=saveDir+'/'
+    fName=saveDir+twoMassID+'.ecsv'
+    astropy.io.ascii.write(table,output=fName, format='ecsv')
+    return table
     

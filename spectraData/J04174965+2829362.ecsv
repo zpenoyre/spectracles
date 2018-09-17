@@ -10,8 +10,8 @@
 # - {SimbadName: IRAS F04147+2822}
 # - {2MASSID: J04174965+2829362}
 # - {ObjectType: TTau*}
-# - {StellarType: M3.7}
-# - {StellarTypeSource: Herczeg+ 2014}
+# - {StellarType: M4}
+# - {StellarTypeSource: Ribas+ 2017}
 # - {RA: 04 17 49.6578}
 # - {DEC: +28 29 36.325}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -19,33 +19,34 @@
 # - {DistanceSource: Gaia Collaboration 2018}
 # - {Teff: 4315.1724}
 # - {TeffSource: Gaia Collaboration 2018}
-# - {Radius: -1.0}
-# - {RadiusSource: ''}
-# - {Luminosity: 0.45}
-# - {LuminositySource: Andrews+ 2013}
+# - {Radius: 2.065}
+# - {RadiusSource: Bulger+ 2014}
+# - {Luminosity: 0.519}
+# - {LuminositySource: Ribas+ 2017}
 # - {Ag: -1.0}
 # - {AgSource: ''}
 # - {Region: Taurus}
-# - {RegionSource: Andrews+ 2013}
-# - {Av: 3.67}
-# - {AvSource: Andrews+ 2013}
-# - {Age: 1.29}
-# - {AgeSource: Siess+ 2000}
-# - {Mass: 0.245}
-# - {MassSource: Siess+ 2000}
+# - {RegionSource: 'Furlan+ 2011, Andrews+ 2013, Ribas+ 2017, Bulger+ 2014'}
+# - {Av: 5.1}
+# - {AvSource: Ribas+ 2017}
+# - {Age: 1.2882495499250788}
+# - {AgeSource: Andrews+ 2013}
+# - {Mass: 0.2454708834830003}
+# - {MassSource: Andrews+ 2013}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}
 # - {DiskMassSource: ''}
-# - {DiskRadius: 0.6}
-# - {DiskRadiusSource: Boneberg+ 2018}
-# - {BinaryFlag: -1}
-# - {BinaryFlagSource: ''}
+# - {DiskRadius: -1.0}
+# - {DiskRadiusSource: ''}
+# - {BinaryFlag: 0}
+# - {BinaryFlagSource: Furlan+ 2011}
+# - {ExtraField: ''}
 # - comments: ['All units for flux+wavelength are SI, I leave it to the user to convert/add astropy units', Meta data about the star is
 #       stored under indivdual fields, 'e.g. if data stored in variable called "dataTable" the R.A. of the star can be found via "dataTable.meta["RA"]".',
 #     Everything intended to be read into astropy tables - either directly or via the getSpectraFromFile() function., See GITHUB-REPO
 #       for more details., Please cite SOME-PAPER if you make use of this tool or data.]
-# - {FileCreated: '2018-09-16'}
+# - {FileCreated: '2018-09-17'}
 # schema: astropy-2.0
 lambda flux error source telescope
 4.445103e-07 1.1447982e-08 4.539717e-09 "STScI 2006" 2MASS
@@ -108,19 +109,19 @@ lambda flux error source telescope
 2.1652834e-06 1.004596e-07 0.0 "Kraus+ 2011" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Ita+ 2010" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Marton+ 2016" 2MASS
-2.1652834e-06 1.004596e-07 0.0 "Zacharias+ 2005" 2MASS
+2.1652834e-06 1.004596e-07 1.9196105e-09 "Abrahamyan+ 2015" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Motch+ 2016" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Takita+ 2010" 2MASS
 2.1652834e-06 1.004596e-07 0.0 "Luhman+ 2006" 2MASS
-2.1652834e-06 1.004596e-07 1.9196105e-09 "Abrahamyan+ 2015" 2MASS
+2.1652834e-06 1.004596e-07 0.0 "Zacharias+ 2005" 2MASS
 2.1652834e-06 9.9179864e-08 0.0 "Abrahamyan+ 2015" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Roeser+ 2008" 2MASS
 2.1652834e-06 9.9179864e-08 1.9196105e-09 "Evans+ 2003" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Cutri+ 2013" 2MASS
 2.1652834e-06 1.004596e-07 0.0 "CMC 2011" 2MASS
+2.1652834e-06 1.004596e-07 1.9196105e-09 "Cutri+ 2012" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Zacharias+ 2012" 2MASS
 2.1652834e-06 1.004596e-07 1.9196105e-09 "Roeser+ 2010" 2MASS
-2.1652834e-06 1.004596e-07 1.9196105e-09 "Cutri+ 2012" 2MASS
 2.1915407e-06 9.556825e-08 6.2462907e-10 "Cutri+ 2003" 2MASS
 2.1915407e-06 9.494362e-08 1.8738873e-09 "Cutri+ 2003" 2MASS
 2.1915407e-06 9.494362e-08 1.8738873e-09 "Motch+ 2016" 2MASS
@@ -130,24 +131,24 @@ lambda flux error source telescope
 3.35233e-06 3.4970274e-08 5.3389737e-10 "Esplin+ 2014" WISE
 3.35233e-06 3.4970274e-08 0.0 "Abrahamyan+ 2015" WISE
 3.35233e-06 3.4970274e-08 8.0084606e-10 "Abrahamyan+ 2015" WISE
-3.55244e-06 3.161691e-08 4.7544224e-10 "Esplin+ 2014" Spitzer
 3.55244e-06 2.8764255e-08 1.4263268e-09 "Rebull+ 2010" Spitzer
+3.55244e-06 3.161691e-08 4.7544224e-10 "Esplin+ 2014" Spitzer
 3.55244e-06 3.2330075e-08 7.131634e-10 "Bulger+ 2014" Spitzer
 3.55244e-06 3.4945007e-08 2.3772112e-10 "Gutermuth+ 2009" Spitzer
 4.4961334e-06 1.8995594e-08 1.4840308e-10 "Gutermuth+ 2009" Spitzer
 4.4961334e-06 2.1221641e-08 4.4520923e-10 "Bulger+ 2014" Spitzer
 4.4961334e-06 2.1221641e-08 4.4520923e-10 "Esplin+ 2014" Spitzer
 4.4961334e-06 1.9292399e-08 8.9041846e-10 "Rebull+ 2010" Spitzer
+4.6032037e-06 1.9254834e-08 0.0 "Abrahamyan+ 2015" WISE
+4.6032037e-06 1.8971674e-08 2.8315933e-10 "Esplin+ 2014" WISE
+4.6032037e-06 1.9113253e-08 2.8315933e-10 "Cutri+ 2012" WISE
+4.6032037e-06 1.9254834e-08 4.24739e-10 "Bulger+ 2014" WISE
 4.6032037e-06 1.9113253e-08 2.8315933e-10 "Abrahamyan+ 2015" WISE
 4.6032037e-06 1.7414298e-08 2.8315933e-10 "Cutri+ 2013" WISE
-4.6032037e-06 1.9254834e-08 4.24739e-10 "Bulger+ 2014" WISE
-4.6032037e-06 1.9113253e-08 2.8315933e-10 "Cutri+ 2012" WISE
-4.6032037e-06 1.8971674e-08 2.8315933e-10 "Esplin+ 2014" WISE
-4.6032037e-06 1.9254834e-08 0.0 "Abrahamyan+ 2015" WISE
-5.7349316e-06 1.3043702e-08 9.1214696e-11 "Gutermuth+ 2009" Spitzer
 5.7349316e-06 1.1310622e-08 5.4728816e-10 "Rebull+ 2010" Spitzer
 5.7349316e-06 1.24051995e-08 3.6485878e-10 "Esplin+ 2014" Spitzer
 5.7349316e-06 1.24051995e-08 2.7364408e-10 "Bulger+ 2014" Spitzer
+5.7349316e-06 1.3043702e-08 9.1214696e-11 "Gutermuth+ 2009" Spitzer
 7.877531e-06 8.025076e-09 3.8675066e-10 "Rebull+ 2010" Spitzer
 7.877531e-06 8.46017e-09 1.9337533e-10 "Bulger+ 2014" Spitzer
 7.877531e-06 8.46017e-09 9.6687665e-11 "Gutermuth+ 2009" Spitzer
@@ -163,18 +164,18 @@ lambda flux error source telescope
 1.15982375e-05 5.0178746e-09 0.0 "Abrahamyan+ 2015" IRAS
 1.840265e-05 1.8248525e-09 7.972656e-11 "ISAS/JAXA 2010" AKARI
 1.840265e-05 1.8248525e-09 7.972656e-11 "Abrahamyan+ 2015" AKARI
-2.2105962e-05 1.5409061e-09 4.297348e-11 "Esplin+ 2014" WISE
-2.2105962e-05 1.5470452e-09 3.683441e-11 "Abrahamyan+ 2015" WISE
-2.2105962e-05 1.5470452e-09 3.683441e-11 "Cutri+ 2012" WISE
-2.2105962e-05 1.5531842e-09 0.0 "Abrahamyan+ 2015" WISE
 2.2105962e-05 1.5531842e-09 4.9112547e-11 "Bulger+ 2014" WISE
+2.2105962e-05 1.5531842e-09 0.0 "Abrahamyan+ 2015" WISE
 2.2105962e-05 1.5470452e-09 4.297348e-11 "Cutri+ 2013" WISE
-2.369107e-05 4.190521e-08 1.5500652e-09 "Meng+ 2017" Unspecified
-2.369107e-05 1.0369402e-09 9.6210935e-11 "Evans+ 2003" Spitzer
-2.369107e-05 1.1812565e-09 6.414063e-11 "Bulger+ 2014" Spitzer
+2.2105962e-05 1.5470452e-09 3.683441e-11 "Abrahamyan+ 2015" WISE
+2.2105962e-05 1.5409061e-09 4.297348e-11 "Esplin+ 2014" WISE
+2.2105962e-05 1.5470452e-09 3.683441e-11 "Cutri+ 2012" WISE
 2.369107e-05 1.0583203e-09 3.741537e-11 "Esplin+ 2014" Spitzer
 2.369107e-05 9.781446e-10 1.0690105e-11 "Gutermuth+ 2009" Spitzer
 2.369107e-05 1.1759116e-09 4.276042e-11 "Rebull+ 2010" Spitzer
+2.369107e-05 1.1812565e-09 6.414063e-11 "Bulger+ 2014" Spitzer
+2.369107e-05 1.0369402e-09 9.6210935e-11 "Evans+ 2003" Spitzer
+2.369107e-05 4.190521e-08 1.5500652e-09 "Meng+ 2017" Unspecified
 2.3896766e-05 1.4499468e-09 0.0 "Abrahamyan+ 2015" IRAS
 6.189268e-05 2.333775e-10 0.0 "Abrahamyan+ 2015" IRAS
 7e-05 2.393694e-11 5.168849e-12 "Marton+ 2017" Herschel
@@ -187,5 +188,4 @@ lambda flux error source telescope
 0.00084985833 3.7382698e-14 0.0 "Bulger+ 2014" Unspecified
 0.00084985833 3.7382698e-14 0.0 "Mohanty+ 2013" SCUBA
 0.000887574 3.42732e-14 0.0 "Andrews+ 2013" SMA
-0.0013 5.325444e-16 0.0 "Boneberg+ 2018" ALMA
 0.0013333333 5.7375e-15 0.0 "Andrews+ 2013" SMA
