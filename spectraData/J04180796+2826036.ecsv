@@ -11,7 +11,7 @@
 # - {2MASSID: J04180796+2826036}
 # - {ObjectType: TTau*}
 # - {StellarType: M6.5}
-# - {StellarTypeSource: Bulger+ 2014}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 18 07.9726}
 # - {DEC: +28 26 03.673}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -19,16 +19,16 @@
 # - {DistanceSource: Gaia Collaboration 2018}
 # - {Teff: 3375.0}
 # - {TeffSource: Gaia Collaboration 2018}
-# - {Radius: 0.635}
-# - {RadiusSource: Bulger+ 2014}
-# - {Luminosity: -1.0}
-# - {LuminositySource: ''}
+# - {Radius: 0.79}
+# - {RadiusSource: Herczeg+ 2014}
+# - {Luminosity: 0.035481334}
+# - {LuminositySource: Herczeg+ 2014}
 # - {Ag: -1.0}
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.6}
-# - {AvSource: Bulger+ 2014}
+# - {Av: 0.2}
+# - {AvSource: Herczeg+ 2014}
 # - {Age: -1.0}
 # - {AgeSource: ''}
 # - {Mass: -1.0}

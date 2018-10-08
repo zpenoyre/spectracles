@@ -10,8 +10,8 @@
 # - {SimbadName: V* FW Tau}
 # - {2MASSID: J04292971+2616532}
 # - {ObjectType: TTau*}
-# - {StellarType: M4}
-# - {StellarTypeSource: Bulger+ 2014}
+# - {StellarType: M5.8}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 29 29.710}
 # - {DEC: +26 16 53.21}
 # - {CoordSource: Cutri+ 2003}
@@ -19,20 +19,20 @@
 # - {DistanceSource: ''}
 # - {Teff: 3496.2725}
 # - {TeffSource: Gaia Collaboration 2018}
-# - {Radius: 1.652}
-# - {RadiusSource: Bulger+ 2014}
-# - {Luminosity: -1.0}
-# - {LuminositySource: ''}
+# - {Radius: 1.59}
+# - {RadiusSource: Herczeg+ 2014}
+# - {Luminosity: 0.15848932}
+# - {LuminositySource: Herczeg+ 2014}
 # - {Ag: -1.0}
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.0}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {Av: 3.8}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 0.1}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.07}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

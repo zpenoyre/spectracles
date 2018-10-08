@@ -19,8 +19,8 @@
 # - {DistanceSource: Gaia Collaboration 2018}
 # - {Teff: 3803.875}
 # - {TeffSource: Gaia Collaboration 2018}
-# - {Radius: 0.961}
-# - {RadiusSource: Bulger+ 2014}
+# - {Radius: 1.35}
+# - {RadiusSource: Herczeg+ 2014}
 # - {Luminosity: 0.114}
 # - {LuminositySource: Ribas+ 2017}
 # - {Ag: 2.186}
@@ -29,10 +29,10 @@
 # - {RegionSource: 'Furlan+ 2011, Andrews+ 2013, Ribas+ 2017, Bulger+ 2014'}
 # - {Av: 0.8}
 # - {AvSource: Ribas+ 2017}
-# - {Age: 2.1877616419650825}
-# - {AgeSource: Andrews+ 2013}
-# - {Mass: 0.13182567530303144}
-# - {MassSource: Andrews+ 2013}
+# - {Age: 0.1}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.03}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

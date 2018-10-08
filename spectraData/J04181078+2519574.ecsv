@@ -10,8 +10,8 @@
 # - {SimbadName: V* V409 Tau}
 # - {2MASSID: J04181078+2519574}
 # - {ObjectType: TTau*}
-# - {StellarType: M1.5}
-# - {StellarTypeSource: Andrews+ 2013}
+# - {StellarType: M0.6}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 18 10.7828}
 # - {DEC: +25 19 57.378}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -27,12 +27,12 @@
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Andrews+ 2013}
-# - {Av: -1.0}
-# - {AvSource: ''}
-# - {Age: 3.467368675841466}
-# - {AgeSource: Andrews+ 2013}
-# - {Mass: 0.42657951411792816}
-# - {MassSource: Andrews+ 2013}
+# - {Av: 1.0}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 1.5848925}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.53}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

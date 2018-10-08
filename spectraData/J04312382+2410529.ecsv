@@ -19,20 +19,20 @@
 # - {DistanceSource: ''}
 # - {Teff: 3058.0}
 # - {TeffSource: Bulger+ 2014}
-# - {Radius: 1.704}
-# - {RadiusSource: Bulger+ 2014}
-# - {Luminosity: -1.0}
-# - {LuminositySource: ''}
+# - {Radius: 2.06}
+# - {RadiusSource: Herczeg+ 2014}
+# - {Luminosity: 0.30902955}
+# - {LuminositySource: Herczeg+ 2014}
 # - {Ag: -1.0}
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.2}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {Av: -0.2}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 0.1}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.12}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

@@ -29,10 +29,10 @@
 # - {RegionSource: 'Furlan+ 2011, Andrews+ 2013, Ribas+ 2017, Bulger+ 2014'}
 # - {Av: 2.7}
 # - {AvSource: Ribas+ 2017}
-# - {Age: 0.2238721261469447}
-# - {AgeSource: Andrews+ 2013}
-# - {Mass: 0.19952623697367425}
-# - {MassSource: Andrews+ 2013}
+# - {Age: 0.1}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.06}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

@@ -10,8 +10,8 @@
 # - {SimbadName: V* V1320 Tau}
 # - {2MASSID: J04311444+2710179}
 # - {ObjectType: TTau*}
-# - {StellarType: M0.5}
-# - {StellarTypeSource: Andrews+ 2013}
+# - {StellarType: K8.0}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 31 14.4390}
 # - {DEC: +27 10 17.921}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -27,12 +27,12 @@
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Andrews+ 2013}
-# - {Av: -1.0}
-# - {AvSource: ''}
-# - {Age: 2.5703957616024615}
-# - {AgeSource: Andrews+ 2013}
-# - {Mass: 0.5370317831033883}
-# - {MassSource: Andrews+ 2013}
+# - {Av: 0.35}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 3.1622777}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.72}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

@@ -10,8 +10,8 @@
 # - {SimbadName: V* V1095 Tau}
 # - {2MASSID: J04131414+2819108}
 # - {ObjectType: TTau*}
-# - {StellarType: M4}
-# - {StellarTypeSource: Bulger+ 2014}
+# - {StellarType: M3.6}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 13 14.1550}
 # - {DEC: +28 19 10.670}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -27,12 +27,12 @@
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.2}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {Av: 0.45}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 0.2511887}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.27}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

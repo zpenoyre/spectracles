@@ -10,8 +10,8 @@
 # - {SimbadName: Cl* Melotte   25     LH     206}
 # - {2MASSID: J04205273+1746415}
 # - {ObjectType: TTau*}
-# - {StellarType: M5.5}
-# - {StellarTypeSource: Bulger+ 2014}
+# - {StellarType: M4.6}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 20 52.7379}
 # - {DEC: +17 46 41.548}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -19,20 +19,20 @@
 # - {DistanceSource: Gaia Collaboration 2018}
 # - {Teff: 3984.9968}
 # - {TeffSource: Gaia Collaboration 2018}
-# - {Radius: 0.568}
-# - {RadiusSource: Bulger+ 2014}
-# - {Luminosity: -1.0}
-# - {LuminositySource: ''}
+# - {Radius: 0.9}
+# - {RadiusSource: Herczeg+ 2014}
+# - {Luminosity: 0.06456541}
+# - {LuminositySource: Herczeg+ 2014}
 # - {Ag: -1.0}
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.5}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {Av: 0.35}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 1.9952632}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.14}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

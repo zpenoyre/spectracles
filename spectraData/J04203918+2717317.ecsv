@@ -27,12 +27,12 @@
 # - {AgSource: Gaia Collaboration 2018}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.8}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {Av: -0.05}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 0.2511887}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.11}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

@@ -392,6 +392,10 @@ def addToMetadata(twoMassID,saveDir,field,value,source,overwrite=0):
                 thisSource=source
             table=addToMetadata(twoMassID,saveDir,field[i],value[i],thisSource,overwrite=overwrite)
         return table
+    if np.ma.is_masked(value):
+        print('\n Trying to record a masked (i.e. not valid) value of ',field)
+        print('Returning original table instead')
+        return getSpectraFromFile(twoMassID,saveDir)
     table=getSpectraFromFile(twoMassID,saveDir)
     if (field not in table.meta.keys()) | ('ource' in field):
         print('\n No property called ',field,' in table')
@@ -455,4 +459,22 @@ def rewriteExtraField(twoMassID,saveDir,entry):
     fName=saveDir+twoMassID+'.ecsv'
     astropy.io.ascii.write(table,output=fName, format='ecsv')
     return table
+    
+def plotSpectra(thisPlot,table,
+colours=['#6699CC','#FFD23F','#FF8C42','#FF3C38','#A23E48'],
+telescopes=['Gaia','2MASS','WISE','Spitzer','Herschel']):
+    ls=table['lambda']
+    fs=table['flux']
+    es=table['error']
+    ss=table['source']
+    ts=table['telescope']
+    noTel=np.flatnonzero(~np.isin(ts,telescopes))
+    thisPlot.scatter(ls[noTel],ls[noTel]*fs[noTel],s=10,c='grey')
+    for i in range(len(telescopes)):
+        tel=telescopes[i]
+        col=colours[i]
+        thisTel=np.flatnonzero(ts==tel)
+        thisPlot.scatter(ls[thisTel],ls[thisTel]*fs[thisTel],s=10,c=col)
+    
+        
     

@@ -10,8 +10,8 @@
 # - {SimbadName: 2MASS J04315844+2543299}
 # - {2MASSID: J04315844+2543299}
 # - {ObjectType: TTau*}
-# - {StellarType: M5}
-# - {StellarTypeSource: Bulger+ 2014}
+# - {StellarType: M4.9}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 31 58.4512}
 # - {DEC: +25 43 30.018}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -28,11 +28,11 @@
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
 # - {Av: 0.4}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 0.1}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.12}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

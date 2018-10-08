@@ -19,8 +19,8 @@
 # - {DistanceSource: ''}
 # - {Teff: 3550.0}
 # - {TeffSource: Ribas+ 2017}
-# - {Radius: -1.0}
-# - {RadiusSource: ''}
+# - {Radius: 2.16}
+# - {RadiusSource: Herczeg+ 2014}
 # - {Luminosity: 0.896}
 # - {LuminositySource: Ribas+ 2017}
 # - {Ag: -1.0}
@@ -29,10 +29,10 @@
 # - {RegionSource: 'Furlan+ 2011, Andrews+ 2013, Ribas+ 2017'}
 # - {Av: 1.1}
 # - {AvSource: Ribas+ 2017}
-# - {Age: 1.9952623697367424}
-# - {AgeSource: Andrews+ 2013}
-# - {Mass: 0.39810716508968474}
-# - {MassSource: Andrews+ 2013}
+# - {Age: 1.2589251}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.36}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

@@ -10,8 +10,8 @@
 # - {SimbadName: 2MASS J04335252+2256269}
 # - {2MASSID: J04335252+2256269}
 # - {ObjectType: TTau*}
-# - {StellarType: M5.75}
-# - {StellarTypeSource: Bulger+ 2014}
+# - {StellarType: M5.5}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 33 52.523}
 # - {DEC: +22 56 26.91}
 # - {CoordSource: Cutri+ 2003}
@@ -19,20 +19,20 @@
 # - {DistanceSource: ''}
 # - {Teff: 3024.0}
 # - {TeffSource: Bulger+ 2014}
-# - {Radius: 1.582}
-# - {RadiusSource: Bulger+ 2014}
-# - {Luminosity: -1.0}
-# - {LuminositySource: ''}
+# - {Radius: 2.03}
+# - {RadiusSource: Herczeg+ 2014}
+# - {Luminosity: 0.26915348}
+# - {LuminositySource: Herczeg+ 2014}
 # - {Ag: -1.0}
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.2}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {Av: 1.0}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 0.1}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.08}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}

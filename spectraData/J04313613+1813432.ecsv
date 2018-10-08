@@ -19,8 +19,8 @@
 # - {DistanceSource: Gaia Collaboration 2018}
 # - {Teff: 3970.0}
 # - {TeffSource: Ribas+ 2017}
-# - {Radius: 1.591}
-# - {RadiusSource: Bulger+ 2014}
+# - {Radius: 0.26}
+# - {RadiusSource: Herczeg+ 2014}
 # - {Luminosity: 0.245}
 # - {LuminositySource: Ribas+ 2017}
 # - {Ag: -1.0}

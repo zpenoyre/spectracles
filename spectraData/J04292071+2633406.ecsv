@@ -10,8 +10,8 @@
 # - {SimbadName: '[HJS91]  507'}
 # - {2MASSID: J04292071+2633406}
 # - {ObjectType: TTau*}
-# - {StellarType: M4}
-# - {StellarTypeSource: Bulger+ 2014}
+# - {StellarType: M4.2}
+# - {StellarTypeSource: Herczeg+ 2014}
 # - {RA: 04 29 20.7028}
 # - {DEC: +26 33 40.435}
 # - {CoordSource: Gaia Collaboration 2018}
@@ -27,12 +27,12 @@
 # - {AgSource: ''}
 # - {Region: Taurus}
 # - {RegionSource: Bulger+ 2014}
-# - {Av: 0.3}
-# - {AvSource: Bulger+ 2014}
-# - {Age: -1.0}
-# - {AgeSource: ''}
-# - {Mass: -1.0}
-# - {MassSource: ''}
+# - {Av: 0.5}
+# - {AvSource: Herczeg+ 2014}
+# - {Age: 0.12589252}
+# - {AgeSource: Herczeg+ 2014}
+# - {Mass: 0.24}
+# - {MassSource: Herczeg+ 2014}
 # - {Mdot: -1.0}
 # - {MdotSource: ''}
 # - {DiskMass: -1.0}
