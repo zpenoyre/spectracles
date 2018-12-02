@@ -154,13 +154,17 @@ def getVizierSpectra(ra,dec,windowSize=2):
     
     sources=np.empty_like(lambdas,dtype=object)
     telescopes=np.empty_like(lambdas,dtype=object)
+    vizierTable=np.empty_like(lambdas,dtype=object)
     
     for i,table in enumerate(tables):
         tableName = table[:table.rfind('/')]
+        vizierTable[i]=tableName # TO FIT WITH ATILLA'S REQUEST (as close as I've got to implementing it yet)
+        #print('tableName: ',tableName)
         catalogs=astroquery.vizier.Vizier.find_catalogs(tableName)
         if len(catalogs)==0:
             continue #for some reason can't find table of data...
         description=catalogs[tableName].description
+        #print('Description: ',description)
         reference=description[description.rfind('(')+1:description.rfind(')')].replace(',','')
         #print('ref: ',reference)
         #sources[i]='"'+reference.replace(',','')+'"'
@@ -468,13 +472,27 @@ telescopes=['Gaia','2MASS','WISE','Spitzer','Herschel']):
     es=table['error']
     ss=table['source']
     ts=table['telescope']
-    noTel=np.flatnonzero(~np.isin(ts,telescopes))
-    thisPlot.scatter(ls[noTel],ls[noTel]*fs[noTel],s=10,c='grey')
     for i in range(len(telescopes)):
         tel=telescopes[i]
         col=colours[i]
-        thisTel=np.flatnonzero(ts==tel)
-        thisPlot.scatter(ls[thisTel],ls[thisTel]*fs[thisTel],s=10,c=col)
+        points=np.flatnonzero((ts==tel) & (es>0))
+        thisPlot.errorbar(ls[points],ls[points]*fs[points],yerr=ls[points]*es[points],color=col,fmt='o',lw=1,zorder=4,label=tel)
+        uppers=np.flatnonzero((ts==tel) & (es<=0))
+        thisPlot.scatter(ls[uppers],ls[uppers]*fs[uppers],facecolors='w',edgecolors=col,marker='v',zorder=3,label='')
+    noTel=np.flatnonzero((~np.isin(ts,telescopes)) & (es>0))
+    thisPlot.errorbar(ls[noTel],ls[noTel]*fs[noTel],yerr=ls[noTel]*es[noTel],color='grey',fmt='o',lw=1,zorder=2,label='Other')
+    noTelUppers=np.flatnonzero((~np.isin(ts,telescopes)) & (es<=0))
+    thisPlot.scatter(ls[noTelUppers],ls[noTelUppers]*fs[noTelUppers],facecolors='w',edgecolors='grey',marker='v',zorder=1,label='')
+    
+    thisPlot.set_yscale('log')
+    thisPlot.set_ylim(0.1*np.min(ls*fs),10*np.max(ls*fs))
+    thisPlot.set_xscale('log')
+    thisPlot.set_xlim(0.5*np.min(ls),2*np.max(ls))
+    
+    thisPlot.set_ylabel(r'$\lambda F_\lambda$ (W m)')
+    thisPlot.set_xlabel(r'$\lambda$ (m)')
+    
+    thisPlot.legend(title=table.meta['SimbadName'],frameon=False)
     
         
     
